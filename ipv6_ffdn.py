@@ -13,7 +13,7 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
     name = isp['ispformat']['name']
 
     if 'website' not in isp['ispformat']:
-        print "WARNING: %s doesn't have a website in its isp.json" % name
+        # print "WARNING: %s doesn't have a website in its isp.json" % name
         result.append({
             "name": name,
             "has_ipv6": None,
@@ -26,10 +26,10 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
     website = isp['ispformat']['website']
 
     domain = ".".join(website.split("/")[2].split(".")[-2:])
-    print "====", domain, "(%s)" % website, "===="
+    # print "====", domain, "(%s)" % website, "===="
 
     # print domain, "has ipv6?", bool(subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()), subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()
-    print "ipv6", [subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()]
+    # print "ipv6", [subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()]
     has_ipv6 = bool(subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip())
 
     mail_domains = []
@@ -39,7 +39,7 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
     for i in filter(None, subprocess.check_output(["dig", "MX", domain, "+short"]).split("\n")):
         mail_domain = i.split(" ")[1][:-1]
         mail_domains.append(mail_domain)
-        print mail_domain, "has ipv6?", bool(subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()), subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()
+        # print mail_domain, "has ipv6?", bool(subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()), subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()
         if bool(subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()):
             has_ipv6_mail = True
 
