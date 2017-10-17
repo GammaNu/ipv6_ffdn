@@ -4,7 +4,11 @@ Listes des fournisseurs d'accès Internet associatifs membres de la fédération
 
 ^ Nom ^ Site Internet ^ Mail ^ NS ^
 {% for isp in isps -%}
+{% if isp["has_ipv6"] != None -%}
 | {{ isp["name"] }} | {% if isp["has_ipv6"] %}{{ '{{' }} :travaux:ok.png {{ '}}' }}{% else %}{{ '{{' }} :travaux:nok.png {{ '}}' }}{% endif %} | {{ isp["mx_if_other"] }} {% if isp["has_ipv6_mail"] %}{{ '{{' }} :travaux:ok.png {{ '}}' }}{% else %}{{ '{{' }} :travaux:nok.png {{ '}}' }}{% endif %} | {% if isp["has_ipv6_ns"] %}{{ '{{' }} :travaux:ok.png {{ '}}' }}{% else %}{{ '{{' }} :travaux:nok.png {{ '}}' }}{% endif %} |
+{% else -%}
+| {{ isp["name"] }} | ??? | ??? | ??? |
+{% endif -%}
 {% endfor %}
 
 Script utilisé pour valider les données, version alarach à améliorer !
