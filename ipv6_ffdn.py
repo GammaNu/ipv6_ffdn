@@ -38,8 +38,8 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
     for i in filter(None, subprocess.check_output(["dig", "MX", domain, "+short"]).split("\n")):
         mail_domain = i.split(" ")[1][:-1]
         mail_domains.append(mail_domain)
-        print mail_domain, "has ipv6?", bool(subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()), subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()
-        if bool(subprocess.check_output(["dig", "AAAA", domain, "+short"]).strip()):
+        print mail_domain, "has ipv6?", bool(subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()), subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()
+        if bool(subprocess.check_output(["dig", "AAAA", mail_domain, "+short"]).strip()):
             has_ipv6_mail = True
 
     # if there is no mail domain that is similar to the isp domain
