@@ -18,6 +18,7 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
             "name": name,
             "has_ipv6": None,
             "has_ipv6_mail": None,
+            "has_ipv6_ns": None,
             "mx_if_other": "",
         })
         continue
@@ -48,10 +49,17 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
     else:
         mx_if_other = ""
 
+    has_ipv6_ns = False
+    for i in filter(None, subprocess.check_output(["dig", "NS", domain, "+short"]).split("\n")):
+        i = i.rstrip(".")
+        if bool(subprocess.check_output(["dig", "AAAA", i, "+short"]).strip()):
+            has_ipv6_ns = True
+
     result.append({
         "name": name,
         "has_ipv6": has_ipv6,
         "has_ipv6_mail": has_ipv6_mail,
+        "has_ipv6_ns": has_ipv6_ns,
         "mx_if_other": mx_if_other,
     })
 
