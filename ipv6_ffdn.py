@@ -66,4 +66,4 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
 
 
 template = Template(open("template.doku").read().decode("Utf-8"))
-print template.render(isps=sorted(result, key=lambda x: x["name"].lower()))
+print template.render(isps=sorted(result, key=lambda x: x["name"].lower())).encode("Utf-8")
