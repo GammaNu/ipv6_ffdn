@@ -64,6 +64,9 @@ for isp in requests.get("https://db.ffdn.org/api/v1/isp/?per_page=9999").json()[
     })
 
 
+import json
+with open('ipv6.json', 'w') as outfile:
+    json.dump(data, outfile)
 
 template = Template(open("template.doku").read().decode("Utf-8"))
 print template.render(isps=sorted(result, key=lambda x: x["name"].lower())).encode("Utf-8")
